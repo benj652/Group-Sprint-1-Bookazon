@@ -6,9 +6,9 @@ public class Bookazon {
     private ArrayList<Book> books;
     private ArrayList<User> users;
 
-    public Bookazon() {
-        books = new ArrayList<>();
-        users = new ArrayList<>();
+    public Bookazon(ArrayList<Book> books, ArrayList<User> users) {
+        this.books = books;
+        this.users = users;
     }
 
     public void addBook(Book book) {
@@ -54,7 +54,9 @@ public class Bookazon {
     
     public static void main(String[] args) {
         
-        Bookazon bookazon = new Bookazon();
+        ArrayList<Book> books = new ArrayList<Book>();
+        ArrayList<User> users = new ArrayList<User>();
+        Bookazon bookazon = new Bookazon(books, users);
         
         // create books
         bookazon.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, 9.99, true));
