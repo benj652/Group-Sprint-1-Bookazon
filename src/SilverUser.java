@@ -5,6 +5,7 @@ public class SilverUser extends User {
         super(name);
     }
     
+    @Override
     public double getDiscount(){
         return discount;
     }
