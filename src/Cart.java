@@ -21,12 +21,7 @@ public class Cart {
     }
 
     public void updateQuantity(CartItem item, int quantity) {
-        for (CartItem cartItem : items) {
-            if (cartItem.equals(item)) {
-                cartItem.setQuantity(quantity);
-                break;
-            }
-        }
+        item.setQuantity(quantity);
     }
 
     public void viewCartDetails() {
