@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     private String dateCreated;
@@ -7,7 +7,7 @@ public class Order {
     private String orderStatus;
     private Address shippingAddress;
     private Address billingAddress;
-    private ArrayList<CartItem> items;
+    private List<CartItem> items;
     private double orderPrice;
 
     public Order(Cart cart, User user) {
