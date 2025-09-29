@@ -1,29 +1,19 @@
+import java.util.List;
 
-import java.util.ArrayList;
-
-public class User {
+public abstract class User {
     private String name;
     private String subscription;
     private Cart cart;
-    private ArrayList<Order> orders;
-    private String shippingAddressLine1;
-    private String shippingAddressLine2;
-    private String shippingAddressCity;
-    private String shippingAddressState;
-    private String shippingAddressZip;
-    private String shippingAddressCountry;
-    private String billingAddressLine1;
-    private String billingAddressLine2;
-    private String billingAddressCity;
-    private String billingAddressState;
-    private String billingAddressZip;
-    private String billingAddressCountry;
+    private List<Order> orders;
+    private Address shippingAddress;
+    private Address billingAddress;
 
-    public User(String name, String subscription) {
+    public User(String name, Cart cart, List<Order> orders, Address shippingAddress, Address billingAddress) {
         this.name = name;
-        this.subscription = subscription;  // normal, gold, platinum, silver membership
-        this.cart = new Cart();
-        this.orders = new ArrayList<>();
+        this.cart = cart;
+        this.orders = orders;
+        this.shippingAddress = shippingAddress;
+        this.billingAddress = billingAddress;
     }
 
     public String getName() {
@@ -43,21 +33,11 @@ public class User {
     }
 
     public void setShippingAddress(String line1, String line2, String city, String state, String zip, String country) {
-        this.shippingAddressLine1 = line1;
-        this.shippingAddressLine2 = line2;
-        this.shippingAddressCity = city;
-        this.shippingAddressState = state;
-        this.shippingAddressZip = zip;
-        this.shippingAddressCountry = country;
+        shippingAddress.setAllFields(line1, line2, city, state, zip, country);
     }
 
     public void setBillingAddress(String line1, String line2, String city, String state, String zip, String country) {
-        this.billingAddressLine1 = line1;
-        this.billingAddressLine2 = line2;
-        this.billingAddressCity = city;
-        this.billingAddressState = state;
-        this.billingAddressZip = zip;
-        this.billingAddressCountry = country;
+        billingAddress.setAllFields(line1, line2, city, state, zip, country);
     }
 
     public void addToCart(Product product, int quantity) {
@@ -80,14 +60,14 @@ public class User {
     }
 
     public void checkout() {
-        Order order = new Order(cart, this.subscription);
-        order.setShippingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
-        order.setBillingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
+        Order order = new Order(cart, this, shippingAddress, billingAddress);
         order.setOrderStatus("Order Placed");
         order.setDateCreated("2024-01-01");
         order.setUserName(this.name);
         orders.add(order);
     }
+
+    public abstract double getDiscount();
 }
 
 

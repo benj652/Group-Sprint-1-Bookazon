@@ -1,46 +1,30 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     private String dateCreated;
     private String dateShipped;
     private String userName;
     private String orderStatus;
-    private String shippingAddressLine1;
-    private String shippingAddressLine2;
-    private String shippingAddressCity;
-    private String shippingAddressState;
-    private String shippingAddressZip;
-    private String shippingAddressCountry;
-    private String billingAddressLine1;
-    private String billingAddressLine2;
-    private String billingAddressCity;
-    private String billingAddressState;
-    private String billingAddressZip;
-    private String billingAddressCountry;
-    private ArrayList<CartItem> items;
+    private Address shippingAddress;
+    private Address billingAddress;
+    private List<CartItem> items;
+    private double preDiscountPrice;
     private double orderPrice;
+    private double orderDiscount;
 
-    public Order(Cart cart, String subscription) {
+    public Order(Cart cart, User user, Address shippingAddress, Address billingAddress) {
         this.items = cart.getItems();
-        this.orderPrice = calculatePrice(subscription);
+        this.orderPrice = calculatePrice(user);
+        this.shippingAddress = shippingAddress;
+        this.billingAddress = billingAddress;
     }
 
     public void setShippingAddress(String line1, String line2, String city, String state, String zip, String country) {
-        this.shippingAddressLine1 = line1;
-        this.shippingAddressLine2 = line2;
-        this.shippingAddressCity = city;
-        this.shippingAddressState = state;
-        this.shippingAddressZip = zip;
-        this.shippingAddressCountry = country;
+        shippingAddress.setAllFields(line1, line2, city, state, zip, country);
     }
 
     public void setBillingAddress(String line1, String line2, String city, String state, String zip, String country) {
-        this.billingAddressLine1 = line1;
-        this.billingAddressLine2 = line2;
-        this.billingAddressCity = city;
-        this.billingAddressState = state;
-        this.billingAddressZip = zip;
-        this.billingAddressCountry = country;
+        billingAddress.setAllFields(line1, line2, city, state, zip, country);
     }
 
     public void setOrderStatus(String status) {
@@ -65,26 +49,44 @@ public class Order {
         System.out.println("Date Shipped: " + dateShipped);
         System.out.println("User Name: " + userName);
         System.out.println("Order Status: " + orderStatus);
-        System.out.println("Shipping Address: " + shippingAddressLine1 + ", " + shippingAddressLine2 + ", " + shippingAddressCity + ", " + shippingAddressState + ", " + shippingAddressZip + ", " + shippingAddressCountry);
-        System.out.println("Billing Address: " + billingAddressLine1 + ", " + billingAddressLine2 + ", " + billingAddressCity + ", " + billingAddressState + ", " + billingAddressZip + ", " + billingAddressCountry);
+        System.out.println("Shipping Address: " + shippingAddress.toString());
+        System.out.println("Billing Address: " + billingAddress.toString());
+        System.out.println("Pre-Discount Price: $" + preDiscountPrice);
         System.out.println("Order Price: $" + orderPrice);
+        System.out.println("Order Discount: $" + String.format("%.2f", orderDiscount));
     }
 
-    public double calculatePrice(String subscription) {
+    public double calculatePrice(User user) {
         double totalPrice = 0.0;
 
         for (CartItem item : items) {
             totalPrice += item.getTotalPrice();
         }
 
-        if (subscription == "gold") {
-            totalPrice *= 0.15; // 15% discount for prime members
-        } else if (subscription == "platinum") {
-            totalPrice *= 0.10; // 10% discount for platinum members
-        } else if (subscription == "silver") {
-            totalPrice *= 0.05; // 5% discount for silver members
-        } 
+        this.preDiscountPrice = totalPrice;
+
+        double discount = calculateDiscount(totalPrice, user);
+
+        totalPrice -= discount;
 
         return totalPrice;
     }
+
+    public double calculateDiscount(double amount, User user) {
+
+        double discount = user.getDiscount();
+
+        double discounted_amount = amount * discount;
+
+        discounted_amount = roundToCents(discounted_amount);
+
+        this.orderDiscount = discounted_amount;
+
+        return discounted_amount;
+    }
+
+    private double roundToCents(double value) {
+        return Math.round(value*100.0)/100.0;
+    }
+
 }
