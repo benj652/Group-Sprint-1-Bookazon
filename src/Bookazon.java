@@ -26,12 +26,12 @@ public class Bookazon {
     }
 
 /*Adding a header and displaying it */
-    public void viewUsers() {
-        System.out.println("User List:");
-        for (User user : users) {
-            user.printUserDetails();
-        }
+public void viewUsers() {
+    System.out.println("User List:");
+    for (User user : users) {
+        user.printUserDetails();
     }
+}
 
     public void removeBook(Book book) {
         books.remove(book);

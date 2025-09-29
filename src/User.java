@@ -77,7 +77,6 @@ public abstract class User {
         }
     }
     
-/*To handle printing of user details */
     public void printUserDetails() {
         System.out.println("User: " + getName() + " - Subscription: " + (getSubscription() != null ? getSubscription() : "N/A"));
     }
