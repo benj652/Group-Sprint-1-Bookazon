@@ -10,9 +10,9 @@ public class Order {
     private ArrayList<CartItem> items;
     private double orderPrice;
 
-    public Order(Cart cart, String subscription) {
+    public Order(Cart cart, User user) {
         this.items = cart.getItems();
-        this.orderPrice = calculatePrice(subscription);
+        this.orderPrice = calculatePrice(user);
         this.shippingAddress = new Address();
         this.billingAddress = new Address();
     }
@@ -52,21 +52,33 @@ public class Order {
         System.out.println("Order Price: $" + orderPrice);
     }
 
-    public double calculatePrice(String subscription) {
+    public double calculatePrice(User user) {
         double totalPrice = 0.0;
 
         for (CartItem item : items) {
             totalPrice += item.getTotalPrice();
         }
 
-        if (subscription == "gold") {
-            totalPrice *= 0.15; // 15% discount for prime members
-        } else if (subscription == "platinum") {
-            totalPrice *= 0.10; // 10% discount for platinum members
-        } else if (subscription == "silver") {
-            totalPrice *= 0.05; // 5% discount for silver members
-        } 
+        double discount = calculateDiscount(totalPrice, user);
+
+        totalPrice -= discount;
 
         return totalPrice;
     }
+
+    public double calculateDiscount(double amount, User user) {
+
+        double discount = user.getDiscount();
+
+        double discounted_amount = amount * discount;
+
+        discounted_amount = roundToCents(discounted_amount);
+
+        return discounted_amount;
+    }
+
+    private double roundToCents(double value) {
+        return Math.round(value*100.0)/100.0;
+    }
+
 }
