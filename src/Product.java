@@ -1,4 +1,8 @@
 public abstract class Product {
+
+    private final int MIN_VALID_PRICE = 0;
+    private final int MIN_VALID_YEAR = 0;
+
     private String title;
     private String author;
     private int yearPublished;
@@ -62,19 +66,42 @@ public abstract class Product {
     }
 
     public boolean isPriceValid() {
-        return price > 0;
+        if (price <= MIN_VALID_PRICE) {
+            return false;
+        }
+
+        return true;
     }
 
     public boolean isTitleValid() {
-        return title != null && !title.isEmpty();
+        if(title == null) {
+            return false;
+        }
+
+        if(title.isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 
     public boolean isAuthorValid() {
-        return author != null && !author.isEmpty();
+        if (author == null) {
+            return false;
+        }
+
+        if (author.isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 
     public boolean isYearPublishedValid() {
-        return yearPublished > 0;
+        if (yearPublished <= MIN_VALID_YEAR) {
+            return false;
+        }
+
+        return true;
     }
 }
-
