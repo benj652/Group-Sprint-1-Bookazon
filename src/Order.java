@@ -8,7 +8,9 @@ public class Order {
     private Address shippingAddress;
     private Address billingAddress;
     private List<CartItem> items;
+    private double preDiscountPrice;
     private double orderPrice;
+    private double orderDiscount;
 
     public Order(Cart cart, User user, Address shippingAddress, Address billingAddress) {
         this.items = cart.getItems();
@@ -49,7 +51,9 @@ public class Order {
         System.out.println("Order Status: " + orderStatus);
         System.out.println("Shipping Address: " + shippingAddress.toString());
         System.out.println("Billing Address: " + billingAddress.toString());
+        System.out.println("Pre-Discount Price: $" + preDiscountPrice);
         System.out.println("Order Price: $" + orderPrice);
+        System.out.println("Order Discount: $" + String.format("%.2f", orderDiscount));
     }
 
     public double calculatePrice(User user) {
@@ -58,6 +62,8 @@ public class Order {
         for (CartItem item : items) {
             totalPrice += item.getTotalPrice();
         }
+
+        this.preDiscountPrice = totalPrice;
 
         double discount = calculateDiscount(totalPrice, user);
 
@@ -73,6 +79,8 @@ public class Order {
         double discounted_amount = amount * discount;
 
         discounted_amount = roundToCents(discounted_amount);
+
+        this.orderDiscount = discounted_amount;
 
         return discounted_amount;
     }
