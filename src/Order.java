@@ -77,10 +77,26 @@ public class Order {
             totalPrice += item.getTotalPrice();
         }
 
-        double discount = user.getDiscount();
+        double discount = calculateDiscount(totalPrice, user);
 
-        totalPrice *= (1 - discount);
+        totalPrice -= discount;
 
         return totalPrice;
     }
+
+    public double calculateDiscount(double amount, User user) {
+
+        double discount = user.getDiscount();
+
+        double discounted_amount = amount * discount;
+
+        discounted_amount = roundToCents(discounted_amount);
+
+        return discounted_amount;
+    }
+
+    private double roundToCents(double value) {
+        return Math.round(value*100.0)/100.0;
+    }
+
 }
