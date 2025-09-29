@@ -1,10 +1,15 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cart {
-    private ArrayList<CartItem> items;
+    private List<CartItem> items;
 
     public Cart() {
-        items = new ArrayList<>();
+        this(new ArrayList<>());
+    }
+
+    public Cart(List<CartItem> items) {
+        this.items = items;
     }
 
     public void addItem(CartItem item) {
@@ -16,12 +21,7 @@ public class Cart {
     }
 
     public void updateQuantity(CartItem item, int quantity) {
-        for (CartItem cartItem : items) {
-            if (cartItem.equals(item)) {
-                cartItem.setQuantity(quantity);
-                break;
-            }
-        }
+        item.setQuantity(quantity);
     }
 
     public void viewCartDetails() {
@@ -30,7 +30,7 @@ public class Cart {
         System.out.println();
     }
 
-    public ArrayList<CartItem> getItems() {
+    public List<CartItem> getItems() {
         return items;
     }
 }
