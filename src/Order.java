@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     private String dateCreated;
@@ -7,14 +7,14 @@ public class Order {
     private String orderStatus;
     private Address shippingAddress;
     private Address billingAddress;
-    private ArrayList<CartItem> items;
+    private List<CartItem> items;
     private double orderPrice;
 
-    public Order(Cart cart, User user) {
+    public Order(Cart cart, User user, Address shippingAddress, Address billingAddress) {
         this.items = cart.getItems();
         this.orderPrice = calculatePrice(user);
-        this.shippingAddress = new Address();
-        this.billingAddress = new Address();
+        this.shippingAddress = shippingAddress;
+        this.billingAddress = billingAddress;
     }
 
     public void setShippingAddress(String line1, String line2, String city, String state, String zip, String country) {
