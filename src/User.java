@@ -60,13 +60,13 @@ public class User {
         this.billingAddressCountry = country;
     }
 
-    public void addToCart(Book book, int quantity) {
-        cart.addItem(new CartItem(book.getTitle(), book.getPrice(), quantity));
+    public void addToCart(Product product, int quantity) {
+        cart.addItem(new CartItem(product.getTitle(), product.getPrice(), quantity));
     }
 
-    public void removeFromCart(Book book) {
+    public void removeFromCart(Product product) {
         for (CartItem item : cart.getItems()) {
-            if (item.getName().equals(book.getTitle())) {
+            if (item.getName().equals(product.getTitle())) {
                 cart.getItems().remove(item);
                 break;
             }
