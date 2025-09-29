@@ -53,6 +53,11 @@ public abstract class User {
         }
     }
 
+    public String toString(){
+        String userString = this.name + " - Role: " + this.subscription;
+        return userString;
+    }
+    
     public void viewOrders() {
         for (Order order : orders) {
             order.printOrderDetails();
