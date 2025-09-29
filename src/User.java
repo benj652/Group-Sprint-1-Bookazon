@@ -76,6 +76,11 @@ public abstract class User {
             order.printOrderDetails();
         }
     }
+    
+/*To handle printing of user details */
+    public void printUserDetails() {
+        System.out.println("User: " + getName() + " - Subscription: " + (getSubscription() != null ? getSubscription() : "N/A"));
+    }
 
     public void checkout() {
         Order order = new Order(cart, this);
