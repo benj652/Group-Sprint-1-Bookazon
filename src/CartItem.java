@@ -32,4 +32,8 @@ public class CartItem {
     public double getTotalPrice() {
         return price * quantity;
     }
+
+    public void printDetails() {
+        System.out.println(itemName + " - Quantity: " + quantity);
+    }
 }
