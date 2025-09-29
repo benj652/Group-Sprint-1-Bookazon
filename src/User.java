@@ -1,19 +1,19 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class User {
     private String name;
     private String subscription;
     private Cart cart;
-    private ArrayList<Order> orders;
+    private List<Order> orders;
     private Address shippingAddress;
     private Address billingAddress;
 
-    public User(String name) {
+    public User(String name, Cart cart, List<Order> orders, Address shippingAddress, Address billingAddress) {
         this.name = name;
-        this.cart = new Cart();
-        this.orders = new ArrayList<>();
-        this.shippingAddress = new Address();
-        this.billingAddress = new Address();
+        this.cart = cart;
+        this.orders = orders;
+        this.shippingAddress = shippingAddress;
+        this.billingAddress = billingAddress;
     }
 
     public String getName() {
@@ -60,9 +60,7 @@ public abstract class User {
     }
 
     public void checkout() {
-        Order order = new Order(cart, this);
-        order.setShippingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
-        order.setBillingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
+        Order order = new Order(cart, this, shippingAddress, billingAddress);
         order.setOrderStatus("Order Placed");
         order.setDateCreated("2024-01-01");
         order.setUserName(this.name);
