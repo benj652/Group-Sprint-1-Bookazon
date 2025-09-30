@@ -83,8 +83,8 @@ public class Bookazon {
 
         // gold user
         // add products to cart
-        bookazon.users.get(1).addToCart(bookazon.books.get(0), 1);
-        bookazon.users.get(1).addToCart(bookazon.books.get(1), 2);
+        bookazon.users.get(1).addToCart(bookazon.products.get(0), 1);
+        bookazon.users.get(1).addToCart(bookazon.products.get(1), 2);
 
         // view cart
         bookazon.users.get(1).viewCart();
