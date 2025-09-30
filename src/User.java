@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
+
 
 public abstract class User {
     private String name;
@@ -63,13 +66,19 @@ public abstract class User {
         System.out.println("User: " + getName() + " - Subscription: " + (getSubscription() != null ? getSubscription() : "N/A"));
     }
 
-    public void checkout() {
-        Order order = new Order(cart, this, shippingAddress, billingAddress);
-        order.setOrderStatus("Order Placed");
-        order.setDateCreated("2024-01-01");
-        order.setUserName(this.name);
-        orders.add(order);
+public void checkout() {
+    Order order = new Order(cart, this);
+    if (shippingAddressLine1 == null || billingAddressLine1 == null) {
+        throw new IllegalStateException("Shipping and billing addresses must be set before checkout.");
+
     }
+    order.setShippingAddress(shippingAddressLine1, shippingAddressLine2, shippingAddressCity, shippingAddressState, shippingAddressZip, shippingAddressCountry);
+    order.setBillingAddress(billingAddressLine1, billingAddressLine2, billingAddressCity, billingAddressState, billingAddressZip, billingAddressCountry);
+    order.setOrderStatus("Order Placed");
+    order.setDateCreated(LocalDate.now().toString()); 
+    order.setUserName(this.name);
+    orders.add(order);
+}
 
     public abstract double getDiscount();
 }
