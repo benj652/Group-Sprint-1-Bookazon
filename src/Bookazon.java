@@ -3,25 +3,25 @@ import java.util.ArrayList;
 
 public class Bookazon {
 
-    private ArrayList<Book> books;
+    private ArrayList<Product> products;
     private ArrayList<User> users;
 
-    public Bookazon(ArrayList<Book> books, ArrayList<User> users) {
-        this.books = books;
+    public Bookazon(ArrayList<Product> products, ArrayList<User> users) {
+        this.products = products;
         this.users = users;
     }
 
-    public void addBook(Book book) {
-        books.add(book);
+    public void addProduct(Product product) {
+        products.add(product);
     }
 
     public void addUser(User user) {
         users.add(user);
     }
 
-    public void viewBooks() {
-        for (Book book : books) {
-            book.printBookDetails();
+    public void viewProducts() {
+        for (Product product : products) {
+            product.printProductDetails();
         }
     }
 
@@ -33,20 +33,16 @@ public void viewUsers() {
     }
 }
 
-    public void removeBook(Book book) {
-        books.remove(book);
+    public void removeProduct(Product product) {
+        products.remove(product);
     }
 
     public void removeUser(User user) {
         users.remove(user);
     }
 
-    public void updateBookDetails(Book book, String newTitle, String newAuthor, int newYearPublished, double newPrice, boolean isPaperback) {
-        book.setTitle(newTitle);
-        book.setAuthor(newAuthor);
-        book.setYearPublished(newYearPublished);
-        book.setPrice(newPrice);
-        book.setPaperback(isPaperback);
+    public void updateProductDetails(Product product, String newTitle, String newAuthor, int newYearPublished, double newPrice) {
+        product.setFields(newTitle, newAuthor, newYearPublished, newPrice);
     }
 
     public void updateRole(User user, String role) {
@@ -56,23 +52,23 @@ public void viewUsers() {
     
     public static void main(String[] args) {
         
-        ArrayList<Book> books = new ArrayList<Book>();
+        ArrayList<Product> products = new ArrayList<Product>();
         ArrayList<User> users = new ArrayList<User>();
-        Bookazon bookazon = new Bookazon(books, users);
+        Bookazon bookazon = new Bookazon(products, users);
         
-        // create books
-        bookazon.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, 9.99, true));
-        bookazon.addBook(new Book("To Kill a Mockingbird", "Harper Lee", 1960, 7.99, false));
-        bookazon.addBook(new Book("1984", "George Orwell", 1949, 8.99, true));
+        // create products
+        bookazon.addProduct(new PaperbackBook("The Great Gatsby", "F. Scott Fitzgerald", 1925, 9.99));
+        bookazon.addProduct(new HardcoverBook("To Kill a Mockingbird", "Harper Lee", 1960, 7.99));
+        bookazon.addProduct(new PaperbackBook("1984", "George Orwell", 1949, 8.99));
 
         // create users
-        bookazon.addUser(new NormalUser("Alice"));
-        bookazon.addUser(new GoldUser("Bob"));
-
+        bookazon.addUser(new NormalUser("Alice", new Cart(), new ArrayList<Order>(), new Address(), new Address()));
+        bookazon.addUser(new GoldUser("Bob", new Cart(), new ArrayList<Order>(), new Address(), new Address()));
+        
         // normal user
-        // add books to cart
-        bookazon.users.get(0).addToCart(bookazon.books.get(0), 1);
-        bookazon.users.get(0).addToCart(bookazon.books.get(1), 2);
+        // add products to cart
+        bookazon.users.get(0).addToCart(bookazon.products.get(0), 1);
+        bookazon.users.get(0).addToCart(bookazon.products.get(1), 2);
 
         // view cart
         bookazon.users.get(0).viewCart();
@@ -88,9 +84,9 @@ public void viewUsers() {
         bookazon.users.get(0).viewOrders();
 
         // gold user
-        // add books to cart
-        bookazon.users.get(1).addToCart(bookazon.books.get(0), 1);
-        bookazon.users.get(1).addToCart(bookazon.books.get(1), 2);
+        // add products to cart
+        bookazon.users.get(1).addToCart(bookazon.products.get(0), 1);
+        bookazon.users.get(1).addToCart(bookazon.products.get(1), 2);
 
         // view cart
         bookazon.users.get(1).viewCart();

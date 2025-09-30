@@ -1,28 +1,22 @@
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.List;
+
 
 public abstract class User {
     private String name;
     private String subscription;
     private Cart cart;
-    private ArrayList<Order> orders;
-    private String shippingAddressLine1;
-    private String shippingAddressLine2;
-    private String shippingAddressCity;
-    private String shippingAddressState;
-    private String shippingAddressZip;
-    private String shippingAddressCountry;
-    private String billingAddressLine1;
-    private String billingAddressLine2;
-    private String billingAddressCity;
-    private String billingAddressState;
-    private String billingAddressZip;
-    private String billingAddressCountry;
+    private List<Order> orders;
+    private Address shippingAddress;
+    private Address billingAddress;
 
-    public User(String name) {
+    public User(String name, Cart cart, List<Order> orders, Address shippingAddress, Address billingAddress) {
         this.name = name;
-        this.cart = new Cart();
-        this.orders = new ArrayList<>();
+        this.cart = cart;
+        this.orders = orders;
+        this.shippingAddress = shippingAddress;
+        this.billingAddress = billingAddress;
     }
 
     public String getName() {
@@ -42,30 +36,20 @@ public abstract class User {
     }
 
     public void setShippingAddress(String line1, String line2, String city, String state, String zip, String country) {
-        this.shippingAddressLine1 = line1;
-        this.shippingAddressLine2 = line2;
-        this.shippingAddressCity = city;
-        this.shippingAddressState = state;
-        this.shippingAddressZip = zip;
-        this.shippingAddressCountry = country;
+        shippingAddress.setAllFields(line1, line2, city, state, zip, country);
     }
 
     public void setBillingAddress(String line1, String line2, String city, String state, String zip, String country) {
-        this.billingAddressLine1 = line1;
-        this.billingAddressLine2 = line2;
-        this.billingAddressCity = city;
-        this.billingAddressState = state;
-        this.billingAddressZip = zip;
-        this.billingAddressCountry = country;
+        billingAddress.setAllFields(line1, line2, city, state, zip, country);
     }
 
-    public void addToCart(Book book, int quantity) {
-        cart.addItem(new CartItem(book.getTitle(), book.getPrice(), quantity));
+    public void addToCart(Product product, int quantity) {
+        cart.addItem(new CartItem(product.getTitle(), product.getPrice(), quantity));
     }
 
-    public void removeFromCart(Book book) {
+    public void removeFromCart(Product product) {
         for (CartItem item : cart.getItems()) {
-            if (item.getName().equals(book.getTitle())) {
+            if (item.getName().equals(product.getTitle())) {
                 cart.getItems().remove(item);
                 break;
             }
@@ -82,12 +66,11 @@ public abstract class User {
         System.out.println("User: " + getName() + " - Subscription: " + (getSubscription() != null ? getSubscription() : "N/A"));
     }
 
-
-
 public void checkout() {
     Order order = new Order(cart, this);
     if (shippingAddressLine1 == null || billingAddressLine1 == null) {
         throw new IllegalStateException("Shipping and billing addresses must be set before checkout.");
+
     }
     order.setShippingAddress(shippingAddressLine1, shippingAddressLine2, shippingAddressCity, shippingAddressState, shippingAddressZip, shippingAddressCountry);
     order.setBillingAddress(billingAddressLine1, billingAddressLine2, billingAddressCity, billingAddressState, billingAddressZip, billingAddressCountry);
