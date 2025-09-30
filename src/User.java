@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -67,13 +66,7 @@ public abstract class User {
     }
 
 public void checkout() {
-    Order order = new Order(cart, this);
-    if (shippingAddressLine1 == null || billingAddressLine1 == null) {
-        throw new IllegalStateException("Shipping and billing addresses must be set before checkout.");
-
-    }
-    order.setShippingAddress(shippingAddressLine1, shippingAddressLine2, shippingAddressCity, shippingAddressState, shippingAddressZip, shippingAddressCountry);
-    order.setBillingAddress(billingAddressLine1, billingAddressLine2, billingAddressCity, billingAddressState, billingAddressZip, billingAddressCountry);
+    Order order = new Order(cart, this, shippingAddress, billingAddress);
     order.setOrderStatus("Order Placed");
     order.setDateCreated(LocalDate.now().toString()); 
     order.setUserName(this.name);
