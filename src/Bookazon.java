@@ -25,11 +25,13 @@ public class Bookazon {
         }
     }
 
-    public void viewUsers() {
-        for (User user : users) {
-            System.out.println(user.getName() + " - Role: " + user.getSubscription());
-        }
+/*Adding a header and displaying it */
+public void viewUsers() {
+    System.out.println("User List:");
+    for (User user : users) {
+        user.printUserDetails();
     }
+}
 
     public void removeProduct(Product product) {
         products.remove(product);

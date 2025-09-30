@@ -58,6 +58,10 @@ public abstract class User {
             order.printOrderDetails();
         }
     }
+    
+    public void printUserDetails() {
+        System.out.println("User: " + getName() + " - Subscription: " + (getSubscription() != null ? getSubscription() : "N/A"));
+    }
 
     public void checkout() {
         Order order = new Order(cart, this, shippingAddress, billingAddress);
