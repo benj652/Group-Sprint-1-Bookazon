@@ -34,16 +34,19 @@ public abstract class User {
         cart.viewCartDetails();
     }
 
+    
+
     public void setShippingAddress(String line1, String line2, String city, String state, String zip, String country) {
         shippingAddress.setAllFields(line1, line2, city, state, zip, country);
+        
     }
 
     public void setBillingAddress(String line1, String line2, String city, String state, String zip, String country) {
         billingAddress.setAllFields(line1, line2, city, state, zip, country);
     }
 
-    public void addToCart(Product product, int quantity) {
-        cart.addItem(new CartItem(product.getTitle(), product.getPrice(), quantity));
+    public void addToCart(CartItem item) {
+        cart.addItem(item);
     }
 
     public void removeFromCart(Product product) {

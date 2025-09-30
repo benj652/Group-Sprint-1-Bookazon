@@ -67,8 +67,8 @@ public void viewUsers() {
         
         // normal user
         // add products to cart
-        bookazon.users.get(0).addToCart(bookazon.products.get(0), 1);
-        bookazon.users.get(0).addToCart(bookazon.products.get(1), 2);
+        bookazon.users.get(0).addToCart(new CartItem(bookazon.products.get(0).getTitle(), bookazon.products.get(0).getPrice(), 1));
+        bookazon.users.get(0).addToCart(new CartItem(bookazon.products.get(1).getTitle(), bookazon.products.get(1).getPrice(), 2));
 
         // view cart
         bookazon.users.get(0).viewCart();
@@ -85,8 +85,8 @@ public void viewUsers() {
 
         // gold user
         // add products to cart
-        bookazon.users.get(1).addToCart(bookazon.products.get(0), 1);
-        bookazon.users.get(1).addToCart(bookazon.products.get(1), 2);
+        bookazon.users.get(1).addToCart(new CartItem(bookazon.products.get(0).getTitle(), bookazon.products.get(0).getPrice(), 1));  
+        bookazon.users.get(1).addToCart(new CartItem(bookazon.products.get(1).getTitle(), bookazon.products.get(1).getPrice(), 2)); 
 
         // view cart
         bookazon.users.get(1).viewCart();
